@@ -574,7 +574,12 @@ function makeMoment(input, format, lang, strict, utc) {
     var itsJalaliDate = (isJalali(this));
     if(input && (typeof input === "string") && !format && itsJalaliDate) {
         input = input.replace(/\//g,"-");
-        if(/\d{4}\-\d{2}\-\d{2}/.test(input)) {
+        var isoDateRegex = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/;
+        if (isoDateRegex.test(input)) {
+            // IsoDate is standard, so we don't treat it as local date
+            format = "YYYY-MM-DDTHH:mm:ss.Z";
+            itsJalaliDate = false;
+        } else if(/\d{4}\-\d{2}\-\d{2}/.test(input)) {
             format = "jYYYY-jMM-jDD";
         } else if (/\d{4}\-\d{2}\-\d{1}/.test(input)) {
             format = "jYYYY-jMM-jD";

@@ -1077,4 +1077,11 @@ describe("moment", function() {
             now.weekYear().should.be.equal(now.jWeekYear());
         });
     });
+    describe("working with ISOString", function () {
+        it("should treat ISO dates as standard", function () {
+            moment.locale("fa");
+            var now = moment("2019-01-16T20:09:01.744Z");
+            now.locale("fa").format("YYYY-MM-DD HH:mm:ss").should.be.equal("1397-10-26 23:39:01");
+        });
+    });
 });
